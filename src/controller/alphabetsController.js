@@ -11,14 +11,16 @@ async function getAllAlphabets(req, res) {
             }
         ));
         res.status(200);
-        res.send({
-            'message': 'success',
-            'data': dataCollection,
+        res.json({
+            status: "Success",
+            message: 'fetch data success',
+            data: dataCollection,
         });
     } catch (error) {
         res.status(500);
-        res.send({
-            'message': 'internal server error',
+        res.json({
+            status: "Error",
+            message: 'Internal server error',
         });
         console.log(error);
     }

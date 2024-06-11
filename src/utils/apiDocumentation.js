@@ -10,11 +10,11 @@ const options = {
         },
         servers: [
             {
-                url: 'http://localhost:3000'
+                url: 'https://basantara-api-2akzaauh3q-et.a.run.app/'
             },
             {
-                url: 'https://basantara-api-2akzaauh3q-et.a.run.app/'
-            }
+                url: 'http://localhost:3000'
+            },
         ],
     },
     apis: [
