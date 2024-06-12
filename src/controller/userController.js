@@ -4,7 +4,7 @@ const firestoreDatabase = require("../utils/firestoreConnect");
 const { hashPassword, comparePassword } = require("../utils/hashHelper");
 
 const jwtKey = process.env.JWT_SECRET_KEY;
-const userFirestore = firestoreDatabase.collection('users');
+const userFirestore = firestoreDatabase.collection('users-dev');
 
 async function userRegister(req, res) {
     try {
