@@ -10,7 +10,7 @@ const options = {
         },
         servers: [
             {
-                url: 'https://basantara-api-2akzaauh3q-et.a.run.app/'
+                url: 'https://dev-basantara-api-2akzaauh3q-et.a.run.app'
             },
             {
                 url: 'http://localhost:3000'
