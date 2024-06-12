@@ -25,7 +25,7 @@ async function userRegister(req, res) {
             username: username,
         });
 
-        res.status(200);
+        res.status(201);
         res.json({
             status: "Success",
             message: "Register Success",
@@ -36,7 +36,6 @@ async function userRegister(req, res) {
             status: "Error",
             message: error.message,
         });
-        console.log(error);
     }
 }
 
@@ -60,7 +59,7 @@ async function userLogin(req, res) {
             throw error;
         }
 
-        const token = jwt.sign({id: userData.id}, jwtKey, { expiresIn: '15s' });
+        const token = jwt.sign({id: userData.id}, jwtKey);
         res.status(200);
         res.json({
             status: "Success",
@@ -74,7 +73,6 @@ async function userLogin(req, res) {
             status: "Error",
             message: error.message,
         });
-        console.log(error);
     }
 }
 

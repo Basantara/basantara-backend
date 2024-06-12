@@ -5,11 +5,11 @@ async function getAllAlphabets(req, res) {
 
     try {
         const firestoreData = await firestoreDatabase.collection('bisindo').get();
-        console.log(firestoreData.docs.forEach(
+        firestoreData.docs.forEach(
             (doc) => {
                 dataCollection.push(doc.data());
             }
-        ));
+        );
         res.status(200);
         res.json({
             status: "Success",

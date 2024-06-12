@@ -18,6 +18,7 @@ const options = {
         ],
     },
     apis: [
+        './src/routes/usersRoutes.js',
         './src/routes/*.js'
     ]
 };

@@ -31,7 +31,7 @@
  *          example:
  *              id: 0
  *              name: a 
- *              descriptionID: regangkan jari telunjuk dan jempol kedua tangan dan tempelkan satu sama lain sehingga membentuk segitiga.
+ *              descriptionID: Regangkan jari telunjuk dan jempol kedua tangan dan tempelkan satu sama lain sehingga membentuk segitiga.
  *              descriptionEN: Extend the index finger and thumb of both hands and touch them together to form a triangle.
  *              imgVector: "https://storage.googleapis.com/basantara-assets/images-vector/a.png"
  *              imgReal: "https://storage.googleapis.com/basantara-assets/images/A.jpg"
@@ -71,12 +71,8 @@
  */
 
 
-
-
-
 const { Router } = require('express');
 const { getAllAlphabets } = require('../controller/alphabetsController');
-const { authenticateToken } = require('../middleware/authentication');
 
 const router = Router();
 
