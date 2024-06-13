@@ -46,13 +46,13 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "main" ]
 
 env:
   PROJECT_ID: ${{ secrets.PROJECT_ID }} # TODO: update Google Cloud project id
   GAR_LOCATION: ${{ secrets.GCP_REGION }} # TODO: update Artifact Registry location
-  GAR_REPOSITORY: ${{ secrets.DEV_ARTIFACT_REPOSITORY }}
-  SERVICE: dev-basantara-api # TODO: update Cloud Run service name
+  GAR_REPOSITORY: ${{ secrets.PROD_ARTIFACT_REPOSITORY }}
+  SERVICE: basantara-api # TODO: update Cloud Run service name
   REGION: ${{ secrets.GCP_REGION }} # TODO: update Cloud Run service region
 
 jobs:
