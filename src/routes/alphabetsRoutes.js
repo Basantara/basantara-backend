@@ -1,12 +1,17 @@
 /**
  * @swagger
  * components:
+ *  securitySchemes:
+ *      bearerAuth:
+ *          type: http
+ *          scheme: bearer
+ *          bearerFormat: JWT
  *  schemas:
  *      Alphabets:
  *          type: object
  *          properties:
  *              id:
- *                  type: int
+ *                  type: integer
  *                  description: Object ID
  *              name:
  *                  type: string
@@ -26,10 +31,12 @@
  *          example:
  *              id: 0
  *              name: a 
- *              descriptionID: regangkan jari telunjuk dan jempol kedua tangan dan tempelkan satu sama lain sehingga membentuk segitiga.
+ *              descriptionID: Regangkan jari telunjuk dan jempol kedua tangan dan tempelkan satu sama lain sehingga membentuk segitiga.
  *              descriptionEN: Extend the index finger and thumb of both hands and touch them together to form a triangle.
  *              imgVector: "https://storage.googleapis.com/basantara-assets/images-vector/a.png"
  *              imgReal: "https://storage.googleapis.com/basantara-assets/images/A.jpg"
+ * security:
+ *  - bearerAuth: []
  */
 
 /**
@@ -37,35 +44,40 @@
  * tags:
  *  name: Alphabets
  *  description: The Alphabets API Endpoint
- * /api/alphabets:
- *  get:
- *      summary: Get all alphabets sign language data
- *      tags: [Alphabets]
- *      responses:
- *          200:
- *              description: success
- *              content:
- *                  application/json:
- *                      schema:
- *                          type: array
- *                          items:
- *                              $ref: '#/components/schemas/Alphabets'
- *          404:
- *              description: Data not found
- *          400:
- *              description: Bad Request
- *          403:
- *              description: Forbidden
- *          500:
- *              description: Service unavailable
+ * paths:
+ *  /api/alphabets:
+ *      get:
+ *          summary: Get all alphabets sign language data
+ *          tags: [Alphabets]
+ *          security:
+ *              - bearerAuth: []
+ *          responses:
+ *              200:
+ *                  description: Success
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: array
+ *                              items:
+ *                                  $ref: '#/components/schemas/Alphabets'
+ *              404:
+ *                  description: Data not found
+ *              400:
+ *                  description: Bad Request
+ *              401:
+ *                  description: Unauthorized
+ *              403:
+ *                  description: Forbidden
+ *              500:
+ *                  description: Service unavailable
  */
+
 
 const { Router } = require('express');
 const { getAllAlphabets } = require('../controller/alphabetsController');
 
 const router = Router();
 
-router.get('/alphabets', getAllAlphabets);
-router.get('/alphabets/:id', (req, res) => {});
+router.get('/', getAllAlphabets);
 
 module.exports = router;
