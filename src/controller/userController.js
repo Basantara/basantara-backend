@@ -44,7 +44,7 @@ async function userLogin(req, res) {
         const { email, password } = req.body;
     
         const userDataQuery = (await userFirestore.where('email', '==', email).get());
-        const userData = userDataQuery.docs[0];
+        const userData = userDataQuery.docs[0].data();
     
         if (userData.empty) {
             const error = new Error("Login Failed");
@@ -52,7 +52,7 @@ async function userLogin(req, res) {
             throw error;
         }
 
-        const checkPassword = await comparePassword(password, userData.data().password);
+        const checkPassword = await comparePassword(password, userData.password);
         if(!checkPassword){
             const error = new Error("Login Failed");
             error.statusCode = 400
@@ -64,6 +64,10 @@ async function userLogin(req, res) {
         res.json({
             status: "Success",
             message: "Login Success",
+            data: {
+                username: userData.username,
+                email: userData.email,
+            },
             token,
         });
 
