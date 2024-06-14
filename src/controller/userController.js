@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const firestoreDatabase = require("../utils/firestoreConnect");
 const { hashPassword, comparePassword } = require("../utils/hashHelper");
 
-const collectionName = process.env.NODE_ENV == 'production' ? 'users' : 'users-dev';
 const jwtKey = process.env.JWT_SECRET_KEY;
+const collectionName = process.env.NODE_ENV == 'production' ? 'users' : 'users-dev';
 const userFirestore = firestoreDatabase.collection(collectionName);
 
 async function userRegister(req, res) {
