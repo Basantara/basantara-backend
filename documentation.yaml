@@ -1,0 +1,354 @@
+openapi: 3.0.0
+info:
+  title: Basantara API
+  description: This is an API documentation for the Basantara applications
+  version: 1.0.0
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Users:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Name of the user
+        email:
+          type: string
+          description: Email of the user
+        password:
+          type: string
+          description: Password of the user
+      example:
+        username: tes
+        email: tes@tes.com
+        password: password
+    Alphabets:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Object ID
+        name:
+          type: string
+          description: Name of the alphabet
+        descriptionID:
+          type: string
+          description: Description of the alphabet in Indonesian
+        descriptionEN:
+          type: string
+          description: Description of the alphabet in English
+        imgVector:
+          type: string
+          description: Image URL for the alphabet vector image
+        imgReal:
+          type: string
+          description: Image URL for the alphabet real image
+      example:
+        id: 1
+        name: a
+        descriptionID: >-
+          Regangkan jari telunjuk dan jempol kedua tangan dan tempelkan satu
+          sama lain sehingga membentuk segitiga.
+        descriptionEN: >-
+          Extend the index finger and thumb of both hands and touch them
+          together to form a triangle.
+        imgVector: https://storage.googleapis.com/basantara-assets/images-vector/a.png
+        imgReal: https://storage.googleapis.com/basantara-assets/images/A.jpg
+tags:
+  - name: Users
+    description: The Users API Endpoint
+  - name: Alphabets
+    description: The Alphabets API Endpoint
+paths:
+  /api/users/register:
+    post:
+      summary: Register new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Users'
+      responses:
+        '200':
+          description: Register success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Success
+                  message:
+                    type: string
+                    description: Message from server
+                    example: Register Success
+        '400':
+          description: Email Already Registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Error
+                  message:
+                    type: string
+                    description: Message from server
+                    example: Email Already Registered
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Error
+                  message:
+                    type: string
+                    description: Message from server
+                    example: Message
+          
+  /api/users/login:
+    post:
+      summary: Login
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email of the user
+                password:
+                  type: string
+                  description: Password of the user
+              example:
+                email: tes@tes.com
+                password: password
+      responses:
+        '200':
+          description: Login success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Success
+                  message:
+                    type: string
+                    description: Message from server
+                    example: Login Success
+                  data:
+                    type: object
+                    description: User data
+                    properties:
+                      username:
+                        type: string
+                        description: user username
+                        example: tes
+                      email:
+                        type: string
+                        description: user username
+                        example: tes@tes.com
+                  token:
+                    type: string
+                    description: JWT token
+                    example: token
+        '400':
+          description: Login failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Login failed
+                  message:
+                    type: string
+                    description: Message from server
+                    example: message
+        '500':
+          description: Error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Error
+                  message:
+                    type: string
+                    description: Message from server
+                    example: message
+  /api/alphabets:
+    get:
+      summary: Get all alphabets sign language data
+      tags:
+        - Alphabets
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Success
+                  message:
+                    type: string
+                    description: Message from server
+                    example: Fetch data success
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Alphabets'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Unauthorized
+                  message:
+                    type: string
+                    description: Message from server
+                    example: User unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Forbidden
+                  message:
+                    type: string
+                    description: Message from server
+                    example: message
+        '500':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Error
+                  message:
+                    type: string
+                    description: Message from server
+                    example: Internal server error
+  /api/alphabets/random:
+    get:
+      summary: Get random alphabet sign language data
+      tags:
+        - Alphabets
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Success
+                  message:
+                    type: string
+                    description: Message from server
+                    example: Fetch data success
+                  data:
+                    $ref: '#/components/schemas/Alphabets'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Unauthorized
+                  message:
+                    type: string
+                    description: Message from server
+                    example: User unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Forbidden
+                  message:
+                    type: string
+                    description: Message from server
+                    example: message
+        '500':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Error
+                  message:
+                    type: string
+                    description: Message from server
+                    example: Internal server error
+servers:
+  - url: https://dev-basantara-api-2akzaauh3q-et.a.run.app
+    variables: {}
+  - url: http://localhost:3000
+    variables: {}
