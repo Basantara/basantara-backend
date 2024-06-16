@@ -10,7 +10,7 @@ function authenticateToken(req, res, next) {
         res.status(401);
         return res.json({
             status: "Unauthorized",
-            message: "User unautherized",
+            message: "User unauthorized",
         });
     }
 

@@ -43,16 +43,15 @@ async function userRegister(req, res) {
 async function userLogin(req, res) {
     try {
         const { email, password } = req.body;
-    
         const userDataQuery = (await userFirestore.where('email', '==', email).get());
-        const userData = userDataQuery.docs[0].data();
     
-        if (userData.empty) {
+        if (userDataQuery.empty) {
             const error = new Error("Login Failed");
             error.statusCode = 400
             throw error;
         }
 
+        const userData = userDataQuery.docs[0].data();
         const checkPassword = await comparePassword(password, userData.password);
         if(!checkPassword){
             const error = new Error("Login Failed");
