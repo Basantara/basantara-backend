@@ -76,7 +76,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Users'
       responses:
-        '200':
+        '201':
           description: Register success
           content:
             application/json:
@@ -92,7 +92,7 @@ paths:
                     description: Message from server
                     example: Register Success
         '400':
-          description: Email Already Registered
+          description: Email already registered
           content:
             application/json:
               schema:
@@ -191,7 +191,7 @@ paths:
                     description: Message from server
                     example: message
         '500':
-          description: Error message
+          description: Internal server error
           content:
             application/json:
               schema:
