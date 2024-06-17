@@ -11,11 +11,16 @@ async function userRegister(req, res) {
     try {
         const { email, password, username } = req.body;
 
-        const checkEmail = await userFirestore.where('email', '==', email).get();
+        if(!email || !password || !username){
+            const error = new Error("Fill email, password and username parameter");
+            error.statusCode = 400
+            throw error;
+        }
 
+        const checkEmail = await userFirestore.where('email', '==', email).get();
         if (!checkEmail.empty) {
             const error = new Error("Email Already Registered");
-            error.statusCode = 400
+            error.statusCode = 409
             throw error;
         }
 
@@ -43,11 +48,17 @@ async function userRegister(req, res) {
 async function userLogin(req, res) {
     try {
         const { email, password } = req.body;
+
+        if(!email || !password){
+            const error = new Error("Fill email and password parameter");
+            error.statusCode = 400
+            throw error;
+        }
+
         const userDataQuery = (await userFirestore.where('email', '==', email).get());
-    
         if (userDataQuery.empty) {
             const error = new Error("Login Failed");
-            error.statusCode = 400
+            error.statusCode = 401
             throw error;
         }
 
@@ -55,7 +66,7 @@ async function userLogin(req, res) {
         const checkPassword = await comparePassword(password, userData.password);
         if(!checkPassword){
             const error = new Error("Login Failed");
-            error.statusCode = 400
+            error.statusCode = 401
             throw error;
         }
 
