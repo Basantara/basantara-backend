@@ -92,6 +92,21 @@ paths:
                     description: Message from server
                     example: Register Success
         '400':
+          description: Required parameters is empty
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Error
+                  message:
+                    type: string
+                    description: Message from server
+                    example: Fill email, password and username parameter
+        '409':
           description: Email already registered
           content:
             application/json:
@@ -176,6 +191,21 @@ paths:
                     description: JWT token
                     example: token
         '400':
+          description: Required parameters is empty
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of response
+                    example: Error
+                  message:
+                    type: string
+                    description: Message from server
+                    example: Fill email and password parameter
+        '401':
           description: Login failed
           content:
             application/json:
@@ -185,11 +215,11 @@ paths:
                   status:
                     type: string
                     description: Status of response
-                    example: Login failed
+                    example: Error
                   message:
                     type: string
                     description: Message from server
-                    example: message
+                    example: Login failed
         '500':
           description: Internal server error
           content:
