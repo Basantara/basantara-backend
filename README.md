@@ -14,7 +14,9 @@ https://dev-basantara-api-2akzaauh3q-et.a.run.app/api-docs/
 
 ## Tools & Services
 **Server:** NodeJS, ExpressJS
+
 **Cloud Services:** Cloud Run, Firestore, Artifact Registry, Cloud Storage
+
 **Other Services:** Swagger, Github Actions
 
 ## Cloud Architecture
